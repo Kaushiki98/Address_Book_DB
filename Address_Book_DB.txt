@@ -1,0 +1,284 @@
+UC-1 :- Ability to create a Address Book Service DB
+
+MySQL  localhost:3306 ssl  SQL > create database Address_Book;
+Query OK, 1 row affected (0.4402 sec)
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| address_book       |
+| example            |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| sys                |
+| testdb             |
+| world              |
++--------------------+
+10 rows in set (0.0706 sec)
+_________________________________________________________________________________________________________________________________________________________________________
+
+UC-2 :-  Ability to create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes
+
+ MySQL  localhost:3306 ssl  address_book  SQL > create table addressBook ( FirstName varchar(50) not null,
+                                             -> LastName varchar(50) not null,
+                                             -> Address varchar(50) not null,
+                                             -> City varchar(50) not null,
+                                             -> State varchar(50) not null,
+                                             -> Zip int unsigned not null,
+                                             -> PhoneNumber int unsigned not null,
+                                             -> Email varchar(50) not null,
+                                             -> primary key (FirstName)
+                                             -> );
+Query OK, 0 rows affected (2.1275 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > describe addressBook;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| FirstName   | varchar(50)  | NO   | PRI | NULL    |       |
+| LastName    | varchar(50)  | NO   |     | NULL    |       |
+| Address     | varchar(50)  | NO   |     | NULL    |       |
+| City        | varchar(50)  | NO   |     | NULL    |       |
+| State       | varchar(50)  | NO   |     | NULL    |       |
+| Zip         | int unsigned | NO   |     | NULL    |       |
+| PhoneNumber | int unsigned | NO   |     | NULL    |       |
+| Email       | varchar(50)  | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.1224 sec)
+______________________________________________________________________________________________________________________________________________________________________________
+
+UC-3 :- Ability to insert new Contacts to Address Book
+
+ MySQL  localhost:3306 ssl  address_book  SQL > insert into addressBook (FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email) values  ( 'Kaushiki', 'abcd','kancherapalem', 'vizag','AP',23456, 98765433,'kaushu@gmail.com'),   ('Soni','defg','sec-a','vizag', 'AP',234665,98762367,'soni@gmail.com'), ('Teju','jhgf','sec-d','vizag','AP',876543,76549764,'teju@gmail.com'), ('Vaishu','sdfghj','Sec-c','vizag','AP',765432, 98765321, 'vaishu@gmail.com');
+
+Query OK, 4 rows affected (0.2657 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook;
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| FirstName | LastName | Address       | City  | State | Zip    | PhoneNumber | Email            |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| Kaushiki  | abcd     | kancherapalem | vizag | AP    |  23456 |    98765433 | kaushu@gmail.com |
+| Soni      | defg     | sec-a         | vizag | AP    | 234665 |    98762367 | soni@gmail.com   |
+| Teju      | jhgf     | sec-d         | vizag | AP    | 876543 |    76549764 | teju@gmail.com   |
+| Vaishu    | sdfghj   | Sec-c         | vizag | AP    | 765432 |    98765321 | vaishu@gmail.com |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+4 rows in set (0.0007 sec)
+__________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-4 :- Ability to edit existing contact person using their name
+
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set City = 'KKD' where FirstName = 'Kaushiki';
+Query OK, 1 row affected (0.1314 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set City = 'Hyd' where FirstName = 'Soni';
+Query OK, 1 row affected (0.2003 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set City = 'aruku' where FirstName = 'Teju';
+Query OK, 1 row affected (0.1438 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook;
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| FirstName | LastName | Address       | City  | State | Zip    | PhoneNumber | Email            |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| Kaushiki  | abcd     | kancherapalem | KKD   | AP    |  23456 |    98765433 | kaushu@gmail.com |
+| Soni      | defg     | sec-a         | Hyd   | AP    | 234665 |    98762367 | soni@gmail.com   |
+| Teju      | jhgf     | sec-d         | aruku | AP    | 876543 |    76549764 | teju@gmail.com   |
+| Vaishu    | sdfghj   | Sec-c         | vizag | AP    | 765432 |    98765321 | vaishu@gmail.com |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+4 rows in set (0.0005 sec)
+________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-5 :- Ability to delete a person using person's name
+
+ MySQL  localhost:3306 ssl  address_book  SQL > delete from  addressBook where FirstName = 'Vaishu';
+Query OK, 1 row affected (0.1219 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook;
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| FirstName | LastName | Address       | City  | State | Zip    | PhoneNumber | Email            |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+| Kaushiki  | abcd     | kancherapalem | KKD   | AP    |  23456 |    98765433 | kaushu@gmail.com |
+| Soni      | defg     | sec-a         | Hyd   | AP    | 234665 |    98762367 | soni@gmail.com   |
+| Teju      | jhgf     | sec-d         | aruku | AP    | 876543 |    76549764 | teju@gmail.com   |
++-----------+----------+---------------+-------+-------+--------+-------------+------------------+
+3 rows in set (0.0267 sec)
+____________________________________________________________________________________________________________________________________________________________________________________________
+ 
+UC-6 :- Ability to Retrieve Person belonging to a City or State from the Address Book
+
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook where City = 'KKD';
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+| FirstName | LastName | Address       | City | State | Zip   | PhoneNumber | Email            |
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+| Kaushiki  | abcd     | kancherapalem | KKD  | AP    | 23456 |    98765433 | kaushu@gmail.com |
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+1 row in set (0.0007 sec)
+___________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-7 :- Ability to understand the size of address book by City and State
+
+ MySQL  localhost:3306 ssl  address_book  SQL > select City, count(FirstName) from addressBook group by City;
++-------+------------------+
+| City  | count(FirstName) |
++-------+------------------+
+| KKD   |                1 |
+| Hyd   |                1 |
+| aruku |                1 |
++-------+------------------+
+3 rows in set (0.0242 sec)
+
+ MySQL  localhost:3306 ssl  address_book  SQL > select State, count(FirstName) from addressBook group by State;
++-------+------------------+
+| State | count(FirstName) |
++-------+------------------+
+| AP    |                3 |
++-------+------------------+
+1 row in set (0.0006 sec)
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-8 :- Ability to retrieve entries sorted alphabetically by Person’s name for a given city
+
+MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook where City = 'KKD' order by FirstName = 'Kaushiki';
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+| FirstName | LastName | Address       | City | State | Zip   | PhoneNumber | Email            |
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+| Kaushiki  | abcd     | kancherapalem | KKD  | AP    | 23456 |    98765433 | kaushu@gmail.com |
++-----------+----------+---------------+------+-------+-------+-------------+------------------+
+1 row in set (0.0011 sec)
+___________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-9 :- Ability to identify each Address Book with name and Type.
+
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set type = 'Mine'where FirstName= 'Kaushiki';
+Query OK, 1 row affected (0.1765 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook;
++-----------+----------+------+---------------+-------+-------+--------+-------------+------------------+
+| FirstName | LastName | type | Address       | City  | State | Zip    | PhoneNumber | Email            |
++-----------+----------+------+---------------+-------+-------+--------+-------------+------------------+
+| Kaushiki  | abcd     | Mine | kancherapalem | KKD   | AP    |  23456 |    98765433 | kaushu@gmail.com |
+| Soni      | defg     | NULL | sec-a         | Hyd   | AP    | 234665 |    98762367 | soni@gmail.com   |
+| Teju      | jhgf     | NULL | sec-d         | aruku | AP    | 876543 |    76549764 | teju@gmail.com   |
++-----------+----------+------+---------------+-------+-------+--------+-------------+------------------+
+3 rows in set (0.0005 sec)
+_________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-11 :- Ability to add person to both Friend and Family
+
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set type = 'Family'where FirstName= 'Soni';
+Query OK, 1 row affected (0.2280 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > update addressBook set type = 'Friend'where FirstName= 'Teju';
+Query OK, 1 row affected (0.2235 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from addressBook;
++-----------+----------+--------+---------------+-------+-------+--------+-------------+------------------+
+| FirstName | LastName | type   | Address       | City  | State | Zip    | PhoneNumber | Email            |
++-----------+----------+--------+---------------+-------+-------+--------+-------------+------------------+
+| Kaushiki  | abcd     | Mine   | kancherapalem | KKD   | AP    |  23456 |    98765433 | kaushu@gmail.com |
+| Soni      | defg     | Family | sec-a         | Hyd   | AP    | 234665 |    98762367 | soni@gmail.com   |
+| Teju      | jhgf     | Friend | sec-d         | aruku | AP    | 876543 |    76549764 | teju@gmail.com   |
++-----------+----------+--------+---------------+-------+-------+--------+-------------+------------------+
+3 rows in set (0.0010 sec)
+_______________________________________________________________________________________________________________________________________________________________________________________________
+
+UC-12 :- Draw the ER Diagram for Address Book Service DB
+
+ MySQL  localhost:3306 ssl  address_book  SQL > create table contacts ( FirstName varchar(50)not null primary key, LastName varchar(50) not null , Adress varchar(50) not null, PhoneNumber int unsigned not null,  email varchar(50) not null );
+Query OK, 0 rows affected (1.3401 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > desc contacts;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| FirstName   | varchar(50)  | NO   | PRI | NULL    |       |
+| LastName    | varchar(50)  | NO   |     | NULL    |       |
+| Adress      | varchar(50)  | NO   |     | NULL    |       |
+| PhoneNumber | int unsigned | NO   |     | NULL    |       |
+| email       | varchar(50)  | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.1391 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > create table Address(
+                                             -> Zip int unsigned not null,
+                                             -> City varchar(50) not null,
+                                             -> State varchar (50) not null);
+Query OK, 0 rows affected (1.0943 sec)
+MySQL  localhost:3306 ssl  address_book  SQL > desc Address;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| Zip   | int unsigned | NO   |     | NULL    |       |
+| City  | varchar(50)  | NO   |     | NULL    |       |
+| State | varchar(50)  | NO   |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > create table contactAddress ( FirstName varchar(50) not null, Zip varchar(6) null, foreign key (FirstName) references contacts (FirstName), foreign key (Zip) references address(Zip) );
+Query OK, 0 rows affected (0.9780 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > desc contactAddress;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(50) | NO   | MUL | NULL    |       |
+| Zip       | varchar(6)  | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.3220 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > create table relations(
+                                             -> type varchar(15),
+                                             -> primary key(type));
+Query OK, 0 rows affected (1.3345 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > desc relations;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| type  | varchar(15) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+1 row in set (0.2580 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > create table contact_relation(
+                                             -> FirstName varchar(50) not null,
+                                             -> type varchar(10),
+                                             -> foreign key (FirstName) references contacts(FirstName),
+                                             -> foreign key(type) references relations(type));
+Query OK, 0 rows affected (1.2537 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > desc contact_relation;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(50) | NO   | MUL | NULL    |       |
+| type      | varchar(10) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.2730 sec)
+
+ MySQL  localhost:3306 ssl  address_book  SQL > insert into contacts values ( 'Swamy','NDK','kkd','25673459','swamy@gmail.com'),('Karnesh','Mumdi','hyd','94567985','karna@gmail.com'),('syam','Juvala','Vizag','64567345','syam@gmail.com');
+Query OK, 3 rows affected (0.3811 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select*from contacts;
++-----------+----------+--------+-------------+-----------------+
+| FirstName | LastName | Adress | PhoneNumber | email           |
++-----------+----------+--------+-------------+-----------------+
+| Karnesh   | Mumdi    | hyd    |    94567985 | karna@gmail.com |
+| Swamy     | NDK      | kkd    |    25673459 | swamy@gmail.com |
+| syam      | Juvala   | Vizag  |    64567345 | syam@gmail.com  |
++-----------+----------+--------+-------------+-----------------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  address_book  SQL > insert into relations values('family'),('friends') ,('work');
+Query OK, 3 rows affected (0.2512 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  address_book  SQL > select * from relations;
++---------+
+| type    |
++---------+
+| family  |
+| friends |
+| work    |
++---------+
+3 rows in set (0.0005 sec)
+
